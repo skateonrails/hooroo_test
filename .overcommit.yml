@@ -19,6 +19,9 @@ PreCommit:
   RuboCop:
     enabled: true
     on_warn: fail # Treat all warnings as failures
+    exclude:
+      - 'spec/spec_helper.rb'
+
 
   Reek:
     enabled: true
