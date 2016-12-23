@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
-describe ToyRobot do
-  let(:toy_robot) { ToyRobot.new }
+describe ToyRobot::Base do
+  let(:toy_robot) { ToyRobot::Base.new }
 
   describe '#report' do
     it 'should return nil' do

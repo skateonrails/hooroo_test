@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
-describe FunctionalToyRobot do
+describe ToyRobot::Functional do
   describe '#initialize' do
     context 'when put inside tabletop limits' do
-      let(:toy_robot) { FunctionalToyRobot.new(0, 0, 'NORTH') }
+      let(:toy_robot) { ToyRobot::Functional.new(0, 0, 'NORTH') }
 
       it 'should set initial position and facing values' do
         expect(toy_robot.current_x_position).to eq(0)
@@ -15,20 +15,20 @@ describe FunctionalToyRobot do
 
     context 'when put outside tabletop limits' do
       it 'should raise error' do
-        expect{ FunctionalToyRobot.new(5, 0, 'WEST') }.to raise_error
+        expect{ ToyRobot::Functional.new(5, 0, 'WEST') }.to raise_error(ToyRobot::InvalidPosition)
       end
     end
 
     context 'using wrong facing value' do
-      it 'should return false' do
-        expect{ FunctionalToyRobot.new(0, 0, 'SOUTH WEST') }.to raise_error
+      it 'should raise error' do
+        expect{ ToyRobot::Functional.new(0, 0, 'SOUTH WEST') }.to raise_error(ToyRobot::InvalidFacingValue)
       end
     end
   end
 
   describe '#report' do
     it 'should return the current position and facing direction of toy robot' do
-      toy_robot = FunctionalToyRobot.new(0, 0, 'NORTH')
+      toy_robot = ToyRobot::Functional.new(0, 0, 'NORTH')
       expect(toy_robot.report).to eq('0,0,NORTH')
     end
   end
@@ -36,7 +36,7 @@ describe FunctionalToyRobot do
   describe '#left' do
     context 'with robot facing NORTH' do
       it 'should set robot to face EAST' do
-        toy_robot = FunctionalToyRobot.new(0, 0, 'NORTH')
+        toy_robot = ToyRobot::Functional.new(0, 0, 'NORTH')
         toy_robot.left
         expect(toy_robot.facing).to eq('EAST')
       end
@@ -44,7 +44,7 @@ describe FunctionalToyRobot do
 
     context 'with robot facing EAST' do
       it 'should set robot to face SOUTH' do
-        toy_robot = FunctionalToyRobot.new(0, 0, 'EAST')
+        toy_robot = ToyRobot::Functional.new(0, 0, 'EAST')
         toy_robot.left
         expect(toy_robot.facing).to eq('SOUTH')
       end
@@ -52,7 +52,7 @@ describe FunctionalToyRobot do
 
     context 'with robot facing SOUTH' do
       it 'should set robot to face WEST' do
-        toy_robot = FunctionalToyRobot.new(0, 0, 'SOUTH')
+        toy_robot = ToyRobot::Functional.new(0, 0, 'SOUTH')
         toy_robot.left
         expect(toy_robot.facing).to eq('WEST')
       end
@@ -60,7 +60,7 @@ describe FunctionalToyRobot do
 
     context 'with robot facing WEST' do
       it 'should set robot to face NORTH' do
-        toy_robot = FunctionalToyRobot.new(0, 0, 'WEST')
+        toy_robot = ToyRobot::Functional.new(0, 0, 'WEST')
         toy_robot.left
         expect(toy_robot.facing).to eq('NORTH')
       end
@@ -70,7 +70,7 @@ describe FunctionalToyRobot do
   describe '#right' do
     context 'with robot facing NORTH' do
       it 'should set robot to face WEST' do
-        toy_robot = FunctionalToyRobot.new(0, 0, 'NORTH')
+        toy_robot = ToyRobot::Functional.new(0, 0, 'NORTH')
         toy_robot.right
         expect(toy_robot.facing).to eq('WEST')
       end
@@ -78,7 +78,7 @@ describe FunctionalToyRobot do
 
     context 'with robot facing WEST' do
       it 'should set robot to face SOUTH' do
-        toy_robot = FunctionalToyRobot.new(0, 0, 'WEST')
+        toy_robot = ToyRobot::Functional.new(0, 0, 'WEST')
         toy_robot.right
         expect(toy_robot.facing).to eq('SOUTH')
       end
@@ -86,7 +86,7 @@ describe FunctionalToyRobot do
 
     context 'with robot facing SOUTH' do
       it 'should set robot to face EAST' do
-        toy_robot = FunctionalToyRobot.new(0, 0, 'SOUTH')
+        toy_robot = ToyRobot::Functional.new(0, 0, 'SOUTH')
         toy_robot.right
         expect(toy_robot.facing).to eq('EAST')
       end
@@ -94,7 +94,7 @@ describe FunctionalToyRobot do
 
     context 'with robot facing EAST' do
       it 'should set robot to face NORTH' do
-        toy_robot = FunctionalToyRobot.new(0, 0, 'EAST')
+        toy_robot = ToyRobot::Functional.new(0, 0, 'EAST')
         toy_robot.right
         expect(toy_robot.facing).to eq('NORTH')
       end
@@ -106,7 +106,7 @@ describe FunctionalToyRobot do
       context 'on valid tabletop positions' do
         context 'with robot facing NORTH' do
           it 'should move robot 1 unit on Y axis' do
-            toy_robot = FunctionalToyRobot.new(0, 0, 'NORTH')
+            toy_robot = ToyRobot::Functional.new(0, 0, 'NORTH')
             toy_robot.move
             expect(toy_robot.report).to eq('0,1,NORTH')
           end
@@ -114,7 +114,7 @@ describe FunctionalToyRobot do
 
         context 'with robot facing SOUTH' do
           it 'should move robot -1 unit on Y axis' do
-            toy_robot = FunctionalToyRobot.new(0, 1, 'SOUTH')
+            toy_robot = ToyRobot::Functional.new(0, 1, 'SOUTH')
             toy_robot.move
             expect(toy_robot.report).to eq('0,0,SOUTH')
           end
@@ -122,7 +122,7 @@ describe FunctionalToyRobot do
 
         context 'with robot facing EAST' do
           it 'should move robot 1 unit on X axis' do
-            toy_robot = FunctionalToyRobot.new(0, 0, 'EAST')
+            toy_robot = ToyRobot::Functional.new(0, 0, 'EAST')
             toy_robot.move
             expect(toy_robot.report).to eq('1,0,EAST')
           end
@@ -130,7 +130,7 @@ describe FunctionalToyRobot do
 
         context 'with robot facing WEST' do
           it 'should move robot 1 unit on X axis' do
-            toy_robot = FunctionalToyRobot.new(4, 0, 'WEST')
+            toy_robot = ToyRobot::Functional.new(4, 0, 'WEST')
             toy_robot.move
             expect(toy_robot.report).to eq('3,0,WEST')
           end
@@ -138,7 +138,7 @@ describe FunctionalToyRobot do
       end
 
       context 'with invalid movement' do
-        let(:toy_robot) { FunctionalToyRobot.new(0, 0, 'WEST') }
+        let(:toy_robot) { ToyRobot::Functional.new(0, 0, 'WEST') }
 
         it 'should return false' do
           expect(toy_robot.move).to be false
