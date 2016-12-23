@@ -59,3 +59,23 @@ c)
 
 The Ruby, PHP or Python source files, the test data and any test code.
 It is not required to provide any graphical output showing the movement of the toy robot.
+
+## Running program
+
+On this folder, you can run program in two different ways:
+
+1. Using a file (or files) with inputs for toy_robot:  
+```
+ruby runner.rb spec/example_inputs/input1.md spec/example_inputs/input2.md spec/example_inputs/input3.md
+```
+
+2. Using the standard input:  
+```
+ruby runner.rb
+```  
+and write the commands manually.  
+Obs: in this mode, you can close the input with the `Ctrl + c` command
+
+## Running tests
+
+Test was made with RSpec gem. Use `rspec` command to run specs
