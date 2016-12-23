@@ -35,68 +35,68 @@ describe ToyRobot::Functional do
 
   describe '#left' do
     context 'with robot facing NORTH' do
-      it 'should set robot to face EAST' do
-        toy_robot = ToyRobot::Functional.new(0, 0, 'NORTH')
-        toy_robot.left
-        expect(toy_robot.facing).to eq('EAST')
-      end
-    end
-
-    context 'with robot facing EAST' do
-      it 'should set robot to face SOUTH' do
-        toy_robot = ToyRobot::Functional.new(0, 0, 'EAST')
-        toy_robot.left
-        expect(toy_robot.facing).to eq('SOUTH')
-      end
-    end
-
-    context 'with robot facing SOUTH' do
       it 'should set robot to face WEST' do
-        toy_robot = ToyRobot::Functional.new(0, 0, 'SOUTH')
+        toy_robot = ToyRobot::Functional.new(0, 0, 'NORTH')
         toy_robot.left
         expect(toy_robot.facing).to eq('WEST')
       end
     end
 
-    context 'with robot facing WEST' do
+    context 'with robot facing EAST' do
       it 'should set robot to face NORTH' do
-        toy_robot = ToyRobot::Functional.new(0, 0, 'WEST')
+        toy_robot = ToyRobot::Functional.new(0, 0, 'EAST')
         toy_robot.left
         expect(toy_robot.facing).to eq('NORTH')
+      end
+    end
+
+    context 'with robot facing SOUTH' do
+      it 'should set robot to face EAST' do
+        toy_robot = ToyRobot::Functional.new(0, 0, 'SOUTH')
+        toy_robot.left
+        expect(toy_robot.facing).to eq('EAST')
+      end
+    end
+
+    context 'with robot facing WEST' do
+      it 'should set robot to face SOUTH' do
+        toy_robot = ToyRobot::Functional.new(0, 0, 'WEST')
+        toy_robot.left
+        expect(toy_robot.facing).to eq('SOUTH')
       end
     end
   end
 
   describe '#right' do
     context 'with robot facing NORTH' do
-      it 'should set robot to face WEST' do
-        toy_robot = ToyRobot::Functional.new(0, 0, 'NORTH')
-        toy_robot.right
-        expect(toy_robot.facing).to eq('WEST')
-      end
-    end
-
-    context 'with robot facing WEST' do
-      it 'should set robot to face SOUTH' do
-        toy_robot = ToyRobot::Functional.new(0, 0, 'WEST')
-        toy_robot.right
-        expect(toy_robot.facing).to eq('SOUTH')
-      end
-    end
-
-    context 'with robot facing SOUTH' do
       it 'should set robot to face EAST' do
-        toy_robot = ToyRobot::Functional.new(0, 0, 'SOUTH')
+        toy_robot = ToyRobot::Functional.new(0, 0, 'NORTH')
         toy_robot.right
         expect(toy_robot.facing).to eq('EAST')
       end
     end
 
-    context 'with robot facing EAST' do
+    context 'with robot facing WEST' do
       it 'should set robot to face NORTH' do
-        toy_robot = ToyRobot::Functional.new(0, 0, 'EAST')
+        toy_robot = ToyRobot::Functional.new(0, 0, 'WEST')
         toy_robot.right
         expect(toy_robot.facing).to eq('NORTH')
+      end
+    end
+
+    context 'with robot facing SOUTH' do
+      it 'should set robot to face WEST' do
+        toy_robot = ToyRobot::Functional.new(0, 0, 'SOUTH')
+        toy_robot.right
+        expect(toy_robot.facing).to eq('WEST')
+      end
+    end
+
+    context 'with robot facing EAST' do
+      it 'should set robot to face SOUTH' do
+        toy_robot = ToyRobot::Functional.new(0, 0, 'EAST')
+        toy_robot.right
+        expect(toy_robot.facing).to eq('SOUTH')
       end
     end
   end
@@ -139,10 +139,6 @@ describe ToyRobot::Functional do
 
       context 'with invalid movement' do
         let(:toy_robot) { ToyRobot::Functional.new(0, 0, 'WEST') }
-
-        it 'should return false' do
-          expect(toy_robot.move).to be false
-        end
 
         it 'should not move toy robot' do
           expect(toy_robot.report).to eq('0,0,WEST')

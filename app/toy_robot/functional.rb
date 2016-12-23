@@ -29,27 +29,31 @@ module ToyRobot
     def left
       case @facing
       when FACING_NORTH
-        @facing = FACING_EAST
-      when FACING_EAST
-        @facing = FACING_SOUTH
-      when FACING_SOUTH
         @facing = FACING_WEST
-      when FACING_WEST
+      when FACING_EAST
         @facing = FACING_NORTH
+      when FACING_SOUTH
+        @facing = FACING_EAST
+      when FACING_WEST
+        @facing = FACING_SOUTH
       end
+
+      nil
     end
 
     def right
       case @facing
       when FACING_NORTH
-        @facing = FACING_WEST
-      when FACING_WEST
-        @facing = FACING_SOUTH
-      when FACING_SOUTH
         @facing = FACING_EAST
-      when FACING_EAST
+      when FACING_WEST
         @facing = FACING_NORTH
+      when FACING_SOUTH
+        @facing = FACING_WEST
+      when FACING_EAST
+        @facing = FACING_SOUTH
       end
+
+      nil
     end
 
     def move
@@ -67,10 +71,12 @@ module ToyRobot
         x_position += -1
       end
 
-      return false unless valid_position?(x_position, y_position)
-      @current_x_position = x_position
-      @current_y_position = y_position
-      true
+      if valid_position?(x_position, y_position)
+        @current_x_position = x_position
+        @current_y_position = y_position
+      end
+
+      nil
     end
 
     private
