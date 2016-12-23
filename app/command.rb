@@ -12,7 +12,8 @@ class Command
 
   attr_reader :toy_robot
 
-  def initialize
+  def initialize(table)
+    @table = table
     @toy_robot = ToyRobot::Base.new
     @command_string = nil
     clear_place_command_params
@@ -51,6 +52,6 @@ class Command
   end
 
   def parsed_place_params
-    [place_command_parse[1].to_i, place_command_parse[2].to_i, place_command_parse[3].to_s]
+    [@table, place_command_parse[1].to_i, place_command_parse[2].to_i, place_command_parse[3].to_s]
   end
 end

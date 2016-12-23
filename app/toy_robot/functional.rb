@@ -25,13 +25,14 @@ module ToyRobot
                                                y_position: 0,
                                                x_position: -1} }.freeze
 
-    def initialize(x_position, y_position, facing)
-      raise InvalidPosition unless valid_position?(x_position, y_position)
-      raise InvalidFacingValue unless valid_facing_value?(facing)
+    def initialize(table, x_position, y_position, facing)
+      @table = table
+      @facing = facing
+      raise InvalidPosition unless @table.valid_square?(x_position, y_position)
+      raise InvalidFacingValue unless valid_facing_value?
 
       @current_x_position = x_position
       @current_y_position = y_position
-      @facing = facing
     end
 
     def report
@@ -52,7 +53,7 @@ module ToyRobot
       x_position = @current_x_position + direction_instructions[:x_position]
       y_position = @current_y_position + direction_instructions[:y_position]
 
-      if valid_position?(x_position, y_position)
+      if @table.valid_square?(x_position, y_position)
         @current_x_position = x_position
         @current_y_position = y_position
       end
@@ -62,20 +63,17 @@ module ToyRobot
 
     private
 
-    def valid_position?(x_position, y_position)
-      (x_position >= 0 && x_position <= 4) && (y_position >= 0 && y_position <= 4)
+    def valid_facing_value?
+      FACING_DIRECTIONS_DICT.keys.include?(@facing)
     end
 
-    def valid_facing_value?(facing)
-      FACING_DIRECTIONS_DICT.keys.include?(facing)
+    def direction_instructions
+      FACING_DIRECTIONS_DICT[@facing]
     end
 
     def rotate(direction)
       @facing = direction_instructions[direction]
     end
 
-    def direction_instructions
-      FACING_DIRECTIONS_DICT[@facing]
-    end
   end
 end

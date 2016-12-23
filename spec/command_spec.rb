@@ -2,7 +2,8 @@
 require 'spec_helper'
 
 describe Command do
-  let(:command) { Command.new }
+  let(:table) { Table.new(5, 5) }
+  let(:command) { Command.new(table) }
 
   describe '#initialize' do
     it 'should setup toy_robot' do
@@ -20,7 +21,7 @@ describe Command do
     describe 'get input and transform into a command for ToyRobot' do
       context 'PLACE' do
         it 'should set a FunctionalToyRobot' do
-          expect(ToyRobot::Functional).to receive(:new).with(0, 1, 'NORTH')
+          expect(ToyRobot::Functional).to receive(:new).with(table, 0, 1, 'NORTH')
           command.run('PLACE 0,1,NORTH')
         end
       end

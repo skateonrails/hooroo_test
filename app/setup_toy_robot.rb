@@ -1,12 +1,13 @@
 # frozen_string_literal: true
-# InputParser is responsible to parse input, use it with command
+# InputParser is responsible to parse input, use it with Command class
 # and outputs result if necessary
-class InputParser
+class SetupToyRobot
   attr_reader :input
 
   def initialize(input)
     @input = input
-    @command = Command.new
+    table = Table.new(5, 5)
+    @command = Command.new(table)
   end
 
   def run
