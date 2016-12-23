@@ -8,10 +8,22 @@ module ToyRobot
     FACING_WEST = 'WEST'
     FACING_SOUTH = 'SOUTH'
 
-    VALID_FACING_VALUES = [FACING_NORTH,
-                           FACING_EAST,
-                           FACING_WEST,
-                           FACING_SOUTH].freeze
+    FACING_DIRECTIONS_DICT = { FACING_NORTH => {left: FACING_WEST,
+                                                right: FACING_EAST,
+                                                y_position: 1,
+                                                x_position: 0},
+                               FACING_SOUTH => {left: FACING_EAST,
+                                                right: FACING_WEST,
+                                                y_position: -1,
+                                                x_position: 0},
+                               FACING_EAST => {left: FACING_NORTH,
+                                               right: FACING_SOUTH,
+                                               y_position: 0,
+                                               x_position: 1},
+                               FACING_WEST => {left: FACING_SOUTH,
+                                               right: FACING_NORTH,
+                                               y_position: 0,
+                                               x_position: -1} }.freeze
 
     def initialize(x_position, y_position, facing)
       raise InvalidPosition unless valid_position?(x_position, y_position)
@@ -27,49 +39,18 @@ module ToyRobot
     end
 
     def left
-      case @facing
-      when FACING_NORTH
-        @facing = FACING_WEST
-      when FACING_EAST
-        @facing = FACING_NORTH
-      when FACING_SOUTH
-        @facing = FACING_EAST
-      when FACING_WEST
-        @facing = FACING_SOUTH
-      end
-
+      rotate(:left)
       nil
     end
 
     def right
-      case @facing
-      when FACING_NORTH
-        @facing = FACING_EAST
-      when FACING_WEST
-        @facing = FACING_NORTH
-      when FACING_SOUTH
-        @facing = FACING_WEST
-      when FACING_EAST
-        @facing = FACING_SOUTH
-      end
-
+      rotate(:right)
       nil
     end
 
     def move
-      x_position = @current_x_position
-      y_position = @current_y_position
-
-      case @facing
-      when FACING_NORTH
-        y_position += 1
-      when FACING_EAST
-        x_position += 1
-      when FACING_SOUTH
-        y_position += -1
-      when FACING_WEST
-        x_position += -1
-      end
+      x_position = @current_x_position + direction_instructions[:x_position]
+      y_position = @current_y_position + direction_instructions[:y_position]
 
       if valid_position?(x_position, y_position)
         @current_x_position = x_position
@@ -86,7 +67,15 @@ module ToyRobot
     end
 
     def valid_facing_value?(facing)
-      VALID_FACING_VALUES.include?(facing)
+      FACING_DIRECTIONS_DICT.keys.include?(facing)
+    end
+
+    def rotate(direction)
+      @facing = direction_instructions[direction]
+    end
+
+    def direction_instructions
+      FACING_DIRECTIONS_DICT[@facing]
     end
   end
 end
