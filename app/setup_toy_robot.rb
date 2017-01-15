@@ -7,7 +7,8 @@ class SetupToyRobot
   def initialize(input)
     @input = input
     table = Table.new(5, 5)
-    @command = Command.new(table)
+    robot = Robot.new(table)
+    @command = Command.new(robot)
   end
 
   def run

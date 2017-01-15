@@ -3,13 +3,8 @@ require 'spec_helper'
 
 describe Command do
   let(:table) { Table.new(5, 5) }
-  let(:command) { Command.new(table) }
-
-  describe '#initialize' do
-    it 'should setup toy_robot' do
-      expect(command.toy_robot).to be_a(ToyRobot::Base)
-    end
-  end
+  let(:robot) { Robot.new(table) }
+  let(:command) { Command.new(robot) }
 
   describe '#run' do
     context 'using invalid command' do
@@ -20,8 +15,8 @@ describe Command do
 
     describe 'get input and transform into a command for ToyRobot' do
       context 'PLACE' do
-        it 'should set a FunctionalToyRobot' do
-          expect(ToyRobot::Functional).to receive(:new).with(table, 0, 1, 'NORTH')
+        it 'should send place to Robot instance' do
+          expect(command.toy_robot).to receive(:place).with(0, 1, 'NORTH')
           command.run('PLACE 0,1,NORTH')
         end
       end

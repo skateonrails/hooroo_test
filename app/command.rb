@@ -12,35 +12,26 @@ class Command
 
   attr_reader :toy_robot
 
-  def initialize(table)
-    @table = table
-    @toy_robot = ToyRobot::Base.new
+  def initialize(robot)
+    @toy_robot = robot
     @command_string = nil
-    clear_place_command_params
   end
 
   def run(command_string)
-    clear_place_command_params
     @command_string = command_string
     return nil unless valid_command?
     return place_robot if valid_place_command?
-
-    @toy_robot.send(@command_string.to_s.downcase.to_sym)
+    execute_command
   end
 
   private
 
-  def clear_place_command_params
-    @place_command_params = nil
-  end
-
   def place_command_parse
-    @place_command_params ||= @command_string.match(PLACE_COMMAND_REGEXP)
+    @command_string.match(PLACE_COMMAND_REGEXP)
   end
 
   def place_robot
-    @toy_robot = ToyRobot::Functional.new(*parsed_place_params)
-    nil
+    @toy_robot.place(*parsed_place_params)
   end
 
   def valid_command?
@@ -48,10 +39,16 @@ class Command
   end
 
   def valid_place_command?
-    !!place_command_parse
+    !place_command_parse.nil?
   end
 
   def parsed_place_params
-    [@table, place_command_parse[1].to_i, place_command_parse[2].to_i, place_command_parse[3].to_s]
+    [place_command_parse[1].to_i,
+     place_command_parse[2].to_i,
+     place_command_parse[3].to_s]
+  end
+
+  def execute_command
+    @toy_robot.send(@command_string.to_s.downcase.to_sym)
   end
 end
